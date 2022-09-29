@@ -38,7 +38,6 @@ router.post('/', async (req, res) => {
             timestamp,
             subscription: []
         });
-        if(newData.subscription.find(item => item.endpoint === sub.endpoint)) return res.status(404).send({ message: 'This device is already subscribed for this username.' });
         newData.subscription.push(sub);
         try {
             await newData.save();
@@ -47,7 +46,6 @@ router.post('/', async (req, res) => {
             return res.status(500).json({ message: 'Something went wrong.' });
         }
     }
-    if(data.subscription.find(item => item.endpoint === sub.endpoint)) return res.status(404).send({ message: 'This device is already subscribed for this username.' });
     data.subscription.push(sub);
     try {
         await data.save();
