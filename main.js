@@ -37,7 +37,10 @@ cronjob.schedule('*/30 * * * *', async () => {
                 await dataFromDB.save();
             } catch(err) { console.log(err); }
         }
-        if(!timestampUndefined && data.timestamp !== newTimestamp) sendNotification(newTimestamp, data.username);
+        if(!timestampUndefined && data.timestamp !== newTimestamp) {
+            sendNotification(newTimestamp, data.username);
+            console.log('sending...');
+        }
         timestampUndefined = false;
     });
 });
