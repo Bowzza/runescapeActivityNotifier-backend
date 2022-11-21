@@ -23,7 +23,7 @@ app.use('/', subUsernameRoute);
 const getInfo = require('./rsapi');
 const sendNotification = require('./PushNotification');
 
-cronjob.schedule('*/30 * * * *', async () => {
+cronjob.schedule('*/2 * * * *', async () => {
     console.log('Check for activity');
     const dataFromDB = await dataSchema.find();
     if(dataFromDB.length === 0) return;
