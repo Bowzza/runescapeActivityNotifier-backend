@@ -38,7 +38,7 @@ cronjob.schedule('*/2 * * * *', async () => {
             } catch(err) { console.log(err); }
         }
         if(!timestampUndefined && data.timestamp !== newTimestamp) {
-            sendNotification(newTimestamp, data.username);
+            await sendNotification(newTimestamp, data.username);
             console.log('sending...');
         }
         timestampUndefined = false;
