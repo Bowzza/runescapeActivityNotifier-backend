@@ -24,7 +24,10 @@ module.exports = async (newTimestamp, username) => {
     const dataFromDB = await dataSchema.findOne({ username });
     dataFromDB.timestamp = newTimestamp;
     dataFromDB.subscription.forEach((sub, index) => {
-        webPush.sendNotification(sub, JSON.stringify(payload)).catch(async err => {
+        webPush.sendNotification(sub, JSON.stringify(payload)).then(async res => {
+            console.log(res);
+            await dataFromDB.save();
+        }).catch(async err => {
             console.log(err);
             if(err.body === 'push subscription has unsubscribed or expired.\n') {
                 dataFromDB.subscription.splice(index, 1);
@@ -34,7 +37,5 @@ module.exports = async (newTimestamp, username) => {
             }
         });
     });
-    try {
-        await dataFromDB.save();
-    } catch(err) { console.log(err); }
+
 }
